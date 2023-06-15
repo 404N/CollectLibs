@@ -11,8 +11,8 @@ android {
         applicationId "com.collect.colleclibs"
         minSdk 24
         targetSdk 33
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,6 +46,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-//    implementation 'com.github.404N:CollectLibs:1.0.2'
+    implementation project(":collectlibs")
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    implementation "io.reactivex.rxjava3:rxjava:3.1.5"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }

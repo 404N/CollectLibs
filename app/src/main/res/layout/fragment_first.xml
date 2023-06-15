@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:padding="16dp">
 
         <Button
@@ -21,15 +23,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/button_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取联系人"
+            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_appList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取App列表"
+            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取短信列表"
+            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_call_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取通话记录"
+            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_device_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取手机信息"
+            app:layout_constraintBottom_toTopOf="@id/textview_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textview_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_first" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

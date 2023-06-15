@@ -1,5 +1,7 @@
 package com.collect.colleclibs
 
+import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.collect.colleclibs.databinding.ActivityMainBinding
+import com.tbruyelle.rxpermissions3.RxPermissions
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -355,6 +355,9 @@ public class PhoneUtil {
      * 获取连接的WiFi名
      */
     public static String getConnectWifiSsid(Context context) {
+        if (!PermissionUtils.isGranted(Manifest.permission.ACCESS_WIFI_STATE) || !PermissionUtils.isGranted(Manifest.permission.ACCESS_NETWORK_STATE)) {
+            return "";
+        }
         WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         //去掉带引号的字符串

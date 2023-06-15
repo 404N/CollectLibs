@@ -20,7 +20,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.404N:CollectLibs:1.0.1'
+    implementation 'com.github.404N:CollectLibs:1.0.3'
 }
 ```
 
@@ -28,18 +28,27 @@ dependencies {
 
 获取短信列表：
 AppInfoUtil.getSmsList(Context context)
+必要的权限:
+<uses-permission android:name="android.permission.READ_SMS" />
 
 获取通话记录：
 AppInfoUtil.getRecord(Context context)
+必要的权限:
+<uses-permission android:name="android.permission.READ_CALL_LOG" />
 
 获取App列表：
 AppInfoUtil.getAppList(Context context)
 
 获取通讯录：
 AppInfoUtil.getContactString(Context context)
+必要的权限:
+<uses-permission android:name="android.permission.READ_CONTACTS" />
 
 获取手机信息：
 AppInfoUtils.getDeviceInfo(Activity context, int authid)
+必要的权限:
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 以上方法均返回json格式的字符串
 

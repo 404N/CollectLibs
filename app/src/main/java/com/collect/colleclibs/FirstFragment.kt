@@ -1,5 +1,6 @@
 package com.collect.colleclibs
 
+import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.collect.colleclibs.databinding.FragmentFirstBinding
+import com.sc.collectlibs.AppInfoUtil
+import com.tbruyelle.rxpermissions3.RxPermissions
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -31,9 +34,35 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            RxPermissions(this)
+                .requestEach(
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_CALL_LOG,
+                ).subscribe {
+
+                }
+        }
+        binding.buttonAppList.setOnClickListener {
+            val data=AppInfoUtil.getAppList(requireContext())
+            binding.textviewFirst.text=data
+        }
+        binding.buttonContact.setOnClickListener {
+            val data=AppInfoUtil.getContactString(requireContext())
+            binding.textviewFirst.text=data
+        }
+        binding.buttonCallLog.setOnClickListener {
+            val data=AppInfoUtil.getRecord(requireContext())
+            binding.textviewFirst.text=data
+        }
+        binding.buttonSms.setOnClickListener {
+            val data=AppInfoUtil.getSmsList(requireContext())
+            binding.textviewFirst.text=data
+        }
+        binding.buttonDeviceInfo.setOnClickListener {
+            val data=AppInfoUtil.getDeviceInfo(activity,123)
+            binding.textviewFirst.text=data
         }
     }
 
