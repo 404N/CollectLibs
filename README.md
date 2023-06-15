@@ -20,7 +20,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.404N:CollectLibs:1.0.0'
+    implementation 'com.github.404N:CollectLibs:1.0.1'
 }
 ```
 
@@ -39,4 +39,6 @@ AppInfoUtils.getAppList(Context context)
 AppInfoUtils.getContactList(Context context)
 
 获取手机信息：
-AppInfoUtils.getDeviceInfo(Context context)
+AppInfoUtils.getDeviceInfo(Activity context, int authid)
+
+以上方法均返回json格式的字符串
