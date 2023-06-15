@@ -45,7 +45,7 @@ AppInfoUtil.getContactString(Context context)
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 获取手机信息：
-AppInfoUtils.getDeviceInfo(Activity context, int authid)
+AppInfoUtil.getDeviceInfo(Activity context, int authid)
 可选的权限:
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
