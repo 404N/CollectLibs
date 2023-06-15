@@ -27,31 +27,45 @@ dependencies {
 ### 使用说明
 
 获取短信列表：
+```kotlin
 AppInfoUtil.getSmsList(Context context)
+```
+
 必要的权限:
 ```xml
 <uses-permission android:name="android.permission.READ_SMS" />
 ```
 
 获取通话记录：
+```kotlin
 AppInfoUtil.getRecord(Context context)
+```
+
 必要的权限:
 ```xml
 <uses-permission android:name="android.permission.READ_CALL_LOG" />
 ```
 
 获取App列表：
+```kotlin
 AppInfoUtil.getAppList(Context context)
+```
 
 获取通讯录：
+```kotlin
 AppInfoUtil.getContactString(Context context)
+```
+
 必要的权限:
 ```xmlxml
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 ```
 
 获取手机信息：
+```kotlin
 AppInfoUtil.getDeviceInfo(Activity context, int authid)
+```
+
 可选的权限:
 ```
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
