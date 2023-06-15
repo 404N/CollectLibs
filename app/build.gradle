@@ -11,8 +11,8 @@ android {
         applicationId "com.collect.colleclibs"
         minSdk 24
         targetSdk 33
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,5 +47,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'com.github.404N:CollectLibs:1.0.0'
+//    implementation 'com.github.404N:CollectLibs:1.0.2'
 }

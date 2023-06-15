@@ -27,18 +27,21 @@ dependencies {
 ### 使用说明
 
 获取短信列表：
-AppInfoUtils.getSmsList(Context context)
+AppInfoUtil.getSmsList(Context context)
 
 获取通话记录：
-AppInfoUtils.getCallLogList(Context context)
+AppInfoUtil.getRecord(Context context)
 
 获取App列表：
-AppInfoUtils.getAppList(Context context)
+AppInfoUtil.getAppList(Context context)
 
 获取通讯录：
-AppInfoUtils.getContactList(Context context)
+AppInfoUtil.getContactString(Context context)
 
 获取手机信息：
 AppInfoUtils.getDeviceInfo(Activity context, int authid)
 
 以上方法均返回json格式的字符串
+
+
+使用时请确保获取了相关权限，若没有相关权限，对应方法返回值均为空字符串.

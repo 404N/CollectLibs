@@ -660,7 +660,9 @@ public class AppInfoUtil {
      * 上传短信内容
      */
     public static String getSmsList(Context context) {
-
+        if (!PermissionUtils.isGranted(Manifest.permission.READ_SMS)) {
+            return "";
+        }
 
         try {
             JSONArray smsBeanList = new JSONArray();
@@ -950,7 +952,9 @@ public class AppInfoUtil {
      * @return
      */
     public static String getRecord(Context context) {
-
+        if (!PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)) {
+            return "";
+        }
         try {
 
             ContentResolver resolver;
