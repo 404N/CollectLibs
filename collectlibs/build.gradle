@@ -15,7 +15,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.sc.collect'
                 artifactId = 'collect'
-                version = '1.0.3'
+                version = '1.0.4'
             }
         }
     }
@@ -23,11 +23,11 @@ afterEvaluate {
 
 android {
     namespace 'com.sc.collectlibs'
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
-        minSdk 24
-        targetSdk 33
+        minSdk 21
+        targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -46,13 +46,6 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'com.blankj:utilcodex:1.30.6'
     implementation 'com.google.code.gson:gson:2.8.2'
