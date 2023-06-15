@@ -26,7 +26,7 @@ dependencies {
 
 ### 使用说明
 
-获取短信列表：
+#### 获取短信列表：
 ```kotlin
 AppInfoUtil.getSmsList(Context context)
 ```
@@ -36,7 +36,7 @@ AppInfoUtil.getSmsList(Context context)
 <uses-permission android:name="android.permission.READ_SMS" />
 ```
 
-获取通话记录：
+#### 获取通话记录：
 ```kotlin
 AppInfoUtil.getRecord(Context context)
 ```
@@ -46,12 +46,12 @@ AppInfoUtil.getRecord(Context context)
 <uses-permission android:name="android.permission.READ_CALL_LOG" />
 ```
 
-获取App列表：
+#### 获取App列表：
 ```kotlin
 AppInfoUtil.getAppList(Context context)
 ```
 
-获取通讯录：
+#### 获取通讯录：
 ```kotlin
 AppInfoUtil.getContactString(Context context)
 ```
@@ -61,7 +61,7 @@ AppInfoUtil.getContactString(Context context)
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 ```
 
-获取手机信息：
+#### 获取手机信息：
 ```kotlin
 AppInfoUtil.getDeviceInfo(Activity context, int authid)
 ```
