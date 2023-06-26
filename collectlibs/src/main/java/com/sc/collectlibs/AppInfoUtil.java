@@ -992,10 +992,8 @@ public class AppInfoUtil {
                 String time = new SimpleDateFormat("HH:mm").format(new Date(dateLong));
                 int duration = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));
                 int type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
-                if (type == 2) {
+                if (type != 1){
                     type = 0;
-                } else if (type != 1) {
-                    type = 2;
                 }
                 JSONObject map = new JSONObject();
                 //"未备注联系人"
