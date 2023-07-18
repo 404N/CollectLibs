@@ -693,7 +693,7 @@ public class AppInfoUtil {
                     jsonObject.put("read", intRead == 0 ? 1 : 0);
                     jsonObject.put("smsTime", longDate);
                     jsonObject.put("smsName", person);
-                    if (!TextUtils.isEmpty(strBody) {
+                    if (!TextUtils.isEmpty(strBody)) {
                         smsBeanList.put(jsonObject);
                     }
                 }
