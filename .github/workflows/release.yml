@@ -2,7 +2,7 @@ name: publish release
 on:
   push:
     tags:
-      - "1.1.0"
+      - "*"
 
 jobs:
   release:
