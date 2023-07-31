@@ -150,10 +150,7 @@ public class PhoneUtil {
      * @return
      */
     public static String getIMEI(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (!PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)) {
-            return "unkown";
-        }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
         String imei = "unkown";
         try {
             imei = telephonyManager.getDeviceId();
