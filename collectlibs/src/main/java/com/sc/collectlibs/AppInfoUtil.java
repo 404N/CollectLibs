@@ -580,7 +580,7 @@ public class AppInfoUtil {
 
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
-            if (cursor == null || cursor.getCount() <= 0) return 0; // 没有图片
+            if (cursor == null || cursor.getCount() <= 0) return -999; // 没有图片
             while (cursor.moveToNext()) {
                 JSONObject jsonObject = new JSONObject();
                 int displayName = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
@@ -621,7 +621,7 @@ public class AppInfoUtil {
 
             ContentResolver contentResolver = context.getContentResolver();
             Cursor cursor = contentResolver.query(uri, null, null, null, null);
-            if (cursor == null || cursor.getCount() <= 0) return 0; // 没有图片
+            if (cursor == null || cursor.getCount() <= 0) return -999; // 没有图片
             while (cursor.moveToNext()) {
                 JSONObject jsonObject = new JSONObject();
                 int displayName = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
@@ -801,7 +801,7 @@ public class AppInfoUtil {
                 Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED)
         ) {
-            return 0;
+            return -999;
         }
         Cursor videoCursor = context.getContentResolver().query(
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -811,6 +811,9 @@ public class AppInfoUtil {
             count++;
         }
         videoCursor.close();
+        if (count == 0) {
+            return -999;
+        }
         return count;
     }
 
@@ -820,7 +823,7 @@ public class AppInfoUtil {
                 Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED)
         ) {
-            return 0;
+            return -999;
         }
         Cursor videoCursor = context.getContentResolver().query(
                 MediaStore.Video.Media.INTERNAL_CONTENT_URI,
@@ -830,6 +833,9 @@ public class AppInfoUtil {
             count++;
         }
         videoCursor.close();
+        if (count == 0) {
+            return -999;
+        }
         return count;
     }
 
@@ -842,7 +848,7 @@ public class AppInfoUtil {
                 Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED)
         ) {
-            return 0;
+            return -999;
         }
         Cursor audioCursor = context.getContentResolver().query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -852,6 +858,9 @@ public class AppInfoUtil {
             count++;
         }
         audioCursor.close();
+        if (count == 0) {
+            return -999;
+        }
         return count;
     }
 
@@ -864,7 +873,7 @@ public class AppInfoUtil {
                 Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED)
         ) {
-            return 0;
+            return -999;
         }
         Cursor audioCursor = context.getContentResolver().query(
                 MediaStore.Audio.Media.INTERNAL_CONTENT_URI,
@@ -874,6 +883,9 @@ public class AppInfoUtil {
             count++;
         }
         audioCursor.close();
+        if (count == 0) {
+            return -999;
+        }
         return count;
     }
 

@@ -160,6 +160,9 @@ public class PhoneUtil {
         } catch (Exception e) {
             imei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         }
+        if(imei.isEmpty()){
+            return  "-999";
+        }
         return imei;
     }
 
