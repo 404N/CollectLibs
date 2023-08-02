@@ -40,6 +40,7 @@ class FirstFragment : Fragment() {
                     Manifest.permission.READ_SMS,
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_CALL_LOG,
+
                 ).subscribe {
 
                 }
