@@ -2,6 +2,8 @@ package com.sc.collectlibs;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import static com.sc.collectlibs.PhoneUtil.intIP2StringIP;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -24,7 +26,11 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +46,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.telephony.CellLocation;
+import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -67,14 +74,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -262,7 +275,7 @@ public class AppInfoUtil {
         deviceMap.put("authId", authid);
         deviceMap.put("batteryPct", getSystemBattery(context));
         deviceMap.put("brand", Build.BRAND);
-        deviceMap.put("cellIp", getOutIp());
+        deviceMap.put("cellIp", getOutIp(context));
         deviceMap.put("chargingState", getStatusBattery(context));
         deviceMap.put("deviceName", Build.BRAND);
         deviceMap.put("downloadFilesCount", -999);
@@ -305,47 +318,32 @@ public class AppInfoUtil {
         return gson.toJson(deviceMap);
     }
 
-    public static String getOutIp() {
-
-        URL infoUrl = null;
-        InputStream inStream = null;
-        String line = "";
+    public static String getOutIp(Context context) {
         try {
-            infoUrl = new URL("http://pv.sohu.com/cityjson?ie=utf-8");
-            URLConnection connection = infoUrl.openConnection();
-            HttpURLConnection httpConnection = (HttpURLConnection) connection;
-            int responseCode = httpConnection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                inStream = httpConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
-                StringBuilder strber = new StringBuilder();
-                while ((line = reader.readLine()) != null)
-                    strber.append(line + "\n");
-                inStream.close();
-                // 从反馈的结果中提取出IP地址
-                int start = strber.indexOf("{");
-                int end = strber.indexOf("}");
-                String json = strber.substring(start, end + 1);
-                if (json != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(json);
-                        line = jsonObject.optString("cip");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            switch (activeNetworkInfo.getType()) {
+                case ConnectivityManager.TYPE_MOBILE:
+                    Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+                    while (en.hasMoreElements()) {
+                        Enumeration<InetAddress> enumIpAddr = en.nextElement().getInetAddresses();
+                        while (enumIpAddr.hasMoreElements()) {
+                            InetAddress inetAddress = enumIpAddr.nextElement();
+                            if (!inetAddress.isLoopbackAddress()) {
+                                return inetAddress.getHostAddress();
+                            }
+                        }
                     }
-                }
-                return line;
-            } else {
 
-                //return getOutIp();
-                return "unknown";
+                case ConnectivityManager.TYPE_WIFI:
+                    WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                    return intIP2StringIP(wifiInfo.getIpAddress());
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return line;
+        return "";
     }
 
     public static String getDeviceId(Context context) {

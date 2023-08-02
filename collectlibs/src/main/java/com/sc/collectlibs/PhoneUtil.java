@@ -422,7 +422,7 @@ public class PhoneUtil {
     /**
      * 将得到的int类型的IP转换为String类型
      */
-    private static String intIP2StringIP(int ip) {
+    static String intIP2StringIP(int ip) {
         return (ip & 0xFF) + "." +
                 ((ip >> 8) & 0xFF) + "." +
                 ((ip >> 16) & 0xFF) + "." +
