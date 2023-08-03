@@ -365,6 +365,10 @@ public class PhoneUtil {
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String ssid = wifiInfo.getSSID().replace("\"", "").replace("<", "").replace(">", "");
+        if (ssid.contains("unknown") || ssid.contains("Mobile")) {
+
+            ssid = "unknown";
+        }
         return ssid;
     }
 
