@@ -104,6 +104,9 @@ public class PhoneUtil {
         if (PermissionUtils.isGranted(permissions)) {
             tel = tm.getLine1Number();
         }
+        if(TextUtils.isEmpty(tel)){
+            return "unknown";
+        }
         return tel;
     }
 
@@ -332,7 +335,7 @@ public class PhoneUtil {
 
                 byte[] macBytes = nif.getHardwareAddress();
                 if (macBytes == null) {
-                    return "";
+                    return "unknown";
                 }
 
                 StringBuilder res1 = new StringBuilder();
@@ -358,14 +361,11 @@ public class PhoneUtil {
         if (!PermissionUtils.isGranted(Manifest.permission.ACCESS_WIFI_STATE) || !PermissionUtils.isGranted(Manifest.permission.ACCESS_NETWORK_STATE)) {
             return "";
         }
-        WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        //获取ssid
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        //去掉带引号的字符串
-        String wifiInfo1 = wifiInfo.getSSID();
-        if (wifiInfo1.contains("\"")) {
-            wifiInfo1 = wifiInfo1.substring(1, wifiInfo1.length() - 1);
-        }
-        return wifiInfo1;
+        String ssid = wifiInfo.getSSID().replace("\"", "").replace("<", "").replace(">", "");
+        return ssid;
     }
 
 
