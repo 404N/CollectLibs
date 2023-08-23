@@ -328,25 +328,27 @@ public class PhoneUtil {
      */
     public static String getMacFromHardware() {
         try {
-            List<NetworkInterface> all =
-                    Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface nif : all) {
-                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+            if(NetworkInterface.getNetworkInterfaces()!=null){
+                List<NetworkInterface> all =
+                        Collections.list(NetworkInterface.getNetworkInterfaces());
+                for (NetworkInterface nif : all) {
+                    if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
 
-                byte[] macBytes = nif.getHardwareAddress();
-                if (macBytes == null) {
-                    return "unknown";
-                }
+                    byte[] macBytes = nif.getHardwareAddress();
+                    if (macBytes == null) {
+                        return "unknown";
+                    }
 
-                StringBuilder res1 = new StringBuilder();
-                for (byte b : macBytes) {
-                    res1.append(String.format("%02X:", b));
-                }
+                    StringBuilder res1 = new StringBuilder();
+                    for (byte b : macBytes) {
+                        res1.append(String.format("%02X:", b));
+                    }
 
-                if (res1.length() > 0) {
-                    res1.deleteCharAt(res1.length() - 1);
+                    if (res1.length() > 0) {
+                        res1.deleteCharAt(res1.length() - 1);
+                    }
+                    return res1.toString();
                 }
-                return res1.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();

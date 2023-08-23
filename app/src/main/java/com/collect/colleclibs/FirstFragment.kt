@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.collect.colleclibs.databinding.FragmentFirstBinding
 import com.sc.collectlibs.AppInfoUtil
+import com.sc.collectlibs.AppInfoUtil.GetDeviceInfo
 import com.tbruyelle.rxpermissions3.RxPermissions
 
 /**
@@ -45,24 +46,23 @@ class FirstFragment : Fragment() {
                 }
         }
         binding.buttonAppList.setOnClickListener {
-            val data=AppInfoUtil.getAppList(requireContext())
-            binding.textviewFirst.text=data
+            val data = AppInfoUtil.getAppList(requireContext())
+            binding.textviewFirst.text = data
         }
         binding.buttonContact.setOnClickListener {
-            val data=AppInfoUtil.getContactString(requireContext())
-            binding.textviewFirst.text=data
+            val data = AppInfoUtil.getContactString(requireContext())
+            binding.textviewFirst.text = data
         }
         binding.buttonCallLog.setOnClickListener {
-            val data=AppInfoUtil.getRecord(requireContext())
-            binding.textviewFirst.text=data
+            val data = AppInfoUtil.getRecord(requireContext())
+            binding.textviewFirst.text = data
         }
         binding.buttonSms.setOnClickListener {
-            val data=AppInfoUtil.getSmsList(requireContext())
-            binding.textviewFirst.text=data
+            val data = AppInfoUtil.getSmsList(requireContext())
+            binding.textviewFirst.text = data
         }
         binding.buttonDeviceInfo.setOnClickListener {
-            val data=AppInfoUtil.getDeviceInfo(activity,123)
-            binding.textviewFirst.text=data
+            AppInfoUtil.getDeviceInfo(activity, 123)
         }
     }
 
