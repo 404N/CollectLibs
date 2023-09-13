@@ -267,9 +267,6 @@ public class AppInfoUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                View decorView = context.getWindow().getDecorView();
-                Rect outRect = new Rect();
-                decorView.getWindowVisibleDisplayFrame(outRect);
                 /**设备信息集合*/
                 HashMap<String, Object> deviceMap = new HashMap<>();
                 deviceMap.put("acChargeState", getStatusACBattery(context));
@@ -288,7 +285,7 @@ public class AppInfoUtil {
                 deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
                 deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
                 deviceMap.put("imei", PhoneUtil.getIMEI(context));
-                deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, outRect.bottom));
+                deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
                 deviceMap.put("language", PhoneUtil.getLanguage(context));
                 long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
                 deviceMap.put("lastBootTime", bootTime);
@@ -326,9 +323,6 @@ public class AppInfoUtil {
     }
 
     public static String getDeviceInfo(Activity context, int authid) {
-        View decorView = context.getWindow().getDecorView();
-        Rect outRect = new Rect();
-        decorView.getWindowVisibleDisplayFrame(outRect);
         /**设备信息集合*/
         HashMap<String, Object> deviceMap = new HashMap<>();
         deviceMap.put("acChargeState", getStatusACBattery(context));
@@ -347,7 +341,7 @@ public class AppInfoUtil {
         deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
         deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
         deviceMap.put("imei", PhoneUtil.getIMEI(context));
-        deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, outRect.bottom));
+        deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
         deviceMap.put("language", PhoneUtil.getLanguage(context));
         long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
         deviceMap.put("lastBootTime", bootTime);
