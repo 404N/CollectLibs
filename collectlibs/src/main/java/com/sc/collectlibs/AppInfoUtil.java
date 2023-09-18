@@ -269,52 +269,56 @@ public class AppInfoUtil {
             public void run() {
                 /**设备信息集合*/
                 HashMap<String, Object> deviceMap = new HashMap<>();
-                deviceMap.put("acChargeState", getStatusACBattery(context));
-                deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
-                deviceMap.put("audioExternalCount", getAudioExternalCount(context));
-                deviceMap.put("audioInternalCount", getAudioInternalCount(context));
-                deviceMap.put("authId", authid);
-                deviceMap.put("batteryPct", getSystemBattery(context));
-                deviceMap.put("brand", Build.BRAND);
-                deviceMap.put("cellIp", getOutIp(context));
-                deviceMap.put("chargingState", getStatusBattery(context));
-                deviceMap.put("deviceName", Build.BRAND);
-                deviceMap.put("downloadFilesCount", -999);
-                deviceMap.put("gaid", AppInfoUtil.getGoogleAdId(context));
+                try{
+                    deviceMap.put("acChargeState", getStatusACBattery(context));
+                    deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
+                    deviceMap.put("audioExternalCount", getAudioExternalCount(context));
+                    deviceMap.put("audioInternalCount", getAudioInternalCount(context));
+                    deviceMap.put("authId", authid);
+                    deviceMap.put("batteryPct", getSystemBattery(context));
+                    deviceMap.put("brand", Build.BRAND);
+                    deviceMap.put("cellIp", getOutIp(context));
+                    deviceMap.put("chargingState", getStatusBattery(context));
+                    deviceMap.put("deviceName", Build.BRAND);
+                    deviceMap.put("downloadFilesCount", -999);
+                    deviceMap.put("gaid", AppInfoUtil.getGoogleAdId(context));
 
-                deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
-                deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
-                deviceMap.put("imei", PhoneUtil.getIMEI(context));
-                deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
-                deviceMap.put("language", PhoneUtil.getLanguage(context));
-                long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-                deviceMap.put("lastBootTime", bootTime);
-                deviceMap.put("latitude", "0");
-                deviceMap.put("longitude", "0");
-                deviceMap.put("model", Build.MODEL);
-                deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
-                deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
-                deviceMap.put("networkType", PhoneUtil.getNetworkState(context));
-                deviceMap.put("os", "android");
-                deviceMap.put("osVersion", Build.VERSION.RELEASE);
-                deviceMap.put("ramTotalSize", PhoneUtil.getTotalMemory(context));
-                deviceMap.put("ramUsableSize", PhoneUtil.getUsedMemory(context));
-                int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-                int screenHeight = context.getResources().getDisplayMetrics().heightPixels;
-                deviceMap.put("resolutionHigh", screenHeight);
-                deviceMap.put("resolutionWidth", screenWidth);
-                deviceMap.put("romTotalSize", PhoneUtil.getExternalMemorySize(context));
-                deviceMap.put("romUsableSize", PhoneUtil.getUsedExternalMemorySize(context));
-                deviceMap.put("rootState", PhoneUtil.isRootSystem() ? true : false);
-                deviceMap.put("screenBrightness", PhoneUtil.getSystemBrightness(context) + "");
-                deviceMap.put("serialNumber", PhoneUtil.getIMEI(context));
-                deviceMap.put("simulatorState", PhoneUtil.canCallPhone(context) ? false : true);
-                deviceMap.put("ssid", PhoneUtil.getConnectWifiSsid(context));
-                deviceMap.put("timeZoneId", PhoneUtil.getGmtTimeZone());
-                deviceMap.put("usbChargeState", getStatusUSBBattery(context));
-                deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
-                deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
-                deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
+                    deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
+                    deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
+                    deviceMap.put("imei", PhoneUtil.getIMEI(context));
+                    deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
+                    deviceMap.put("language", PhoneUtil.getLanguage(context));
+                    long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+                    deviceMap.put("lastBootTime", bootTime);
+                    deviceMap.put("latitude", "0");
+                    deviceMap.put("longitude", "0");
+                    deviceMap.put("model", Build.MODEL);
+                    deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
+                    deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
+                    deviceMap.put("networkType", PhoneUtil.getNetworkState(context));
+                    deviceMap.put("os", "android");
+                    deviceMap.put("osVersion", Build.VERSION.RELEASE);
+                    deviceMap.put("ramTotalSize", PhoneUtil.getTotalMemory(context));
+                    deviceMap.put("ramUsableSize", PhoneUtil.getUsedMemory(context));
+                    int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+                    int screenHeight = context.getResources().getDisplayMetrics().heightPixels;
+                    deviceMap.put("resolutionHigh", screenHeight);
+                    deviceMap.put("resolutionWidth", screenWidth);
+                    deviceMap.put("romTotalSize", PhoneUtil.getExternalMemorySize(context));
+                    deviceMap.put("romUsableSize", PhoneUtil.getUsedExternalMemorySize(context));
+                    deviceMap.put("rootState", PhoneUtil.isRootSystem() ? true : false);
+                    deviceMap.put("screenBrightness", PhoneUtil.getSystemBrightness(context) + "");
+                    deviceMap.put("serialNumber", PhoneUtil.getIMEI(context));
+                    deviceMap.put("simulatorState", PhoneUtil.canCallPhone(context) ? false : true);
+                    deviceMap.put("ssid", PhoneUtil.getConnectWifiSsid(context));
+                    deviceMap.put("timeZoneId", PhoneUtil.getGmtTimeZone());
+                    deviceMap.put("usbChargeState", getStatusUSBBattery(context));
+                    deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
+                    deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
+                    deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 Gson gson = new Gson();
                 getDeviceInfo.getDeviceInfo(gson.toJson(deviceMap));
             }
@@ -325,52 +329,56 @@ public class AppInfoUtil {
     public static String getDeviceInfo(Activity context, int authid) {
         /**设备信息集合*/
         HashMap<String, Object> deviceMap = new HashMap<>();
-        deviceMap.put("acChargeState", getStatusACBattery(context));
-        deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
-        deviceMap.put("audioExternalCount", getAudioExternalCount(context));
-        deviceMap.put("audioInternalCount", getAudioInternalCount(context));
-        deviceMap.put("authId", authid);
-        deviceMap.put("batteryPct", getSystemBattery(context));
-        deviceMap.put("brand", Build.BRAND);
-        deviceMap.put("cellIp", getOutIp(context));
-        deviceMap.put("chargingState", getStatusBattery(context));
-        deviceMap.put("deviceName", Build.BRAND);
-        deviceMap.put("downloadFilesCount", -999);
-        deviceMap.put("gaid", AppInfoUtil.getGoogleAdId(context));
+        try{
+            deviceMap.put("acChargeState", getStatusACBattery(context));
+            deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
+            deviceMap.put("audioExternalCount", getAudioExternalCount(context));
+            deviceMap.put("audioInternalCount", getAudioInternalCount(context));
+            deviceMap.put("authId", authid);
+            deviceMap.put("batteryPct", getSystemBattery(context));
+            deviceMap.put("brand", Build.BRAND);
+            deviceMap.put("cellIp", getOutIp(context));
+            deviceMap.put("chargingState", getStatusBattery(context));
+            deviceMap.put("deviceName", Build.BRAND);
+            deviceMap.put("downloadFilesCount", -999);
+            deviceMap.put("gaid", AppInfoUtil.getGoogleAdId(context));
 
-        deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
-        deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
-        deviceMap.put("imei", PhoneUtil.getIMEI(context));
-        deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
-        deviceMap.put("language", PhoneUtil.getLanguage(context));
-        long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-        deviceMap.put("lastBootTime", bootTime);
-        deviceMap.put("latitude", "0");
-        deviceMap.put("longitude", "0");
-        deviceMap.put("model", Build.MODEL);
-        deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
-        deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
-        deviceMap.put("networkType", PhoneUtil.getNetworkState(context));
-        deviceMap.put("os", "android");
-        deviceMap.put("osVersion", Build.VERSION.RELEASE);
-        deviceMap.put("ramTotalSize", PhoneUtil.getTotalMemory(context));
-        deviceMap.put("ramUsableSize", PhoneUtil.getUsedMemory(context));
-        int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-        int screenHeight = context.getResources().getDisplayMetrics().heightPixels;
-        deviceMap.put("resolutionHigh", screenHeight);
-        deviceMap.put("resolutionWidth", screenWidth);
-        deviceMap.put("romTotalSize", PhoneUtil.getExternalMemorySize(context));
-        deviceMap.put("romUsableSize", PhoneUtil.getUsedExternalMemorySize(context));
-        deviceMap.put("rootState", PhoneUtil.isRootSystem() ? true : false);
-        deviceMap.put("screenBrightness", PhoneUtil.getSystemBrightness(context) + "");
-        deviceMap.put("serialNumber", PhoneUtil.getIMEI(context));
-        deviceMap.put("simulatorState", PhoneUtil.canCallPhone(context) ? false : true);
-        deviceMap.put("ssid", PhoneUtil.getConnectWifiSsid(context));
-        deviceMap.put("timeZoneId", PhoneUtil.getGmtTimeZone());
-        deviceMap.put("usbChargeState", getStatusUSBBattery(context));
-        deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
-        deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
-        deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
+            deviceMap.put("imagesExternalCount", getSystemPhotoListExternalCount(context));
+            deviceMap.put("imagesInternalCount", getSystemPhotoListInternalCount(context));
+            deviceMap.put("imei", PhoneUtil.getIMEI(context));
+            deviceMap.put("keyboard", AppInfoUtil.keyboardIsShow((Activity) context, 0));
+            deviceMap.put("language", PhoneUtil.getLanguage(context));
+            long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+            deviceMap.put("lastBootTime", bootTime);
+            deviceMap.put("latitude", "0");
+            deviceMap.put("longitude", "0");
+            deviceMap.put("model", Build.MODEL);
+            deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
+            deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
+            deviceMap.put("networkType", PhoneUtil.getNetworkState(context));
+            deviceMap.put("os", "android");
+            deviceMap.put("osVersion", Build.VERSION.RELEASE);
+            deviceMap.put("ramTotalSize", PhoneUtil.getTotalMemory(context));
+            deviceMap.put("ramUsableSize", PhoneUtil.getUsedMemory(context));
+            int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+            int screenHeight = context.getResources().getDisplayMetrics().heightPixels;
+            deviceMap.put("resolutionHigh", screenHeight);
+            deviceMap.put("resolutionWidth", screenWidth);
+            deviceMap.put("romTotalSize", PhoneUtil.getExternalMemorySize(context));
+            deviceMap.put("romUsableSize", PhoneUtil.getUsedExternalMemorySize(context));
+            deviceMap.put("rootState", PhoneUtil.isRootSystem() ? true : false);
+            deviceMap.put("screenBrightness", PhoneUtil.getSystemBrightness(context) + "");
+            deviceMap.put("serialNumber", PhoneUtil.getIMEI(context));
+            deviceMap.put("simulatorState", PhoneUtil.canCallPhone(context) ? false : true);
+            deviceMap.put("ssid", PhoneUtil.getConnectWifiSsid(context));
+            deviceMap.put("timeZoneId", PhoneUtil.getGmtTimeZone());
+            deviceMap.put("usbChargeState", getStatusUSBBattery(context));
+            deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
+            deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
+            deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Gson gson = new Gson();
         return gson.toJson(deviceMap);
     }
@@ -382,7 +390,7 @@ public class AppInfoUtil {
             switch (activeNetworkInfo.getType()) {
                 case ConnectivityManager.TYPE_MOBILE:
                     Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-                    while (en.hasMoreElements()) {
+                    while (en!=null&&en.hasMoreElements()) {
                         Enumeration<InetAddress> enumIpAddr = en.nextElement().getInetAddresses();
                         while (enumIpAddr.hasMoreElements()) {
                             InetAddress inetAddress = enumIpAddr.nextElement();

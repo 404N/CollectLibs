@@ -41,6 +41,7 @@ class FirstFragment : Fragment() {
                     Manifest.permission.READ_SMS,
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_CALL_LOG,
+                    Manifest.permission.READ_PHONE_NUMBERS,
                 ).subscribe {
 
                 }
@@ -62,7 +63,12 @@ class FirstFragment : Fragment() {
             binding.textviewFirst.text = data
         }
         binding.buttonDeviceInfo.setOnClickListener {
-            AppInfoUtil.getDeviceInfo(activity, 123)
+            AppInfoUtil.getDeviceInfo(
+                activity,
+                {
+//                        data -> binding.textviewFirst.text = data
+                }, 123,
+            )
         }
     }
 
