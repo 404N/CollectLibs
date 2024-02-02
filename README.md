@@ -21,7 +21,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.404N:CollectLibs:1.1.6'
+    implementation 'com.github.404N:CollectLibs:1.1.7'
 }
 ```
 
@@ -31,6 +31,11 @@ dependencies {
 
 ```kotlin
 AppInfoUtil.getSmsList(Context context)
+```
+
+// 新版方法增加了2个参数sendType和status，用于获取短信类型，如收件箱、发件箱、草稿箱和短信发送状态等
+```kotlin
+AppInfoUtil.getSmsListType(Context context)
 ```
 
 必要的权限:
@@ -75,16 +80,20 @@ AppInfoUtil.getContactString(Context context)
 
 ```kotlin
 //（旧版方法）运行在主线程的方法，可能会导致取不到gaid，若使用此方法，须在子线程，才能取到gaid
+// needPosition为true时需要已经申请定位权限
 AppInfoUtil.getDeviceInfo(
     Activity context,
-    int authid
+    int authid,
+    boolean needPosition,
 )
 
 //运行在子线程的方法，可以取到gaid,但是需要传入一个回调接口
+// needPosition为true时需要已经申请定位权限
 AppInfoUtil.getDeviceInfo(
     Activity context,
     GetDeviceInfo getDeviceInfo,
-    int authid
+    int authid,
+    boolean needPosition,
 ) 
 ```
 新版方法使用示例
@@ -98,7 +107,8 @@ AppInfoUtil.getDeviceInfo(
             Log.d("MainActivity", "getDeviceInfo: " + s);
         }
     },
-    1
+    1,
+    true
 );
 ```
 Kotlin
@@ -110,7 +120,8 @@ AppInfoUtil.getDeviceInfo(
             Log.d("MainActivity", "getDeviceInfo: $s")
         }
     },
-    1
+    1,
+    true
 )
 ```
 
@@ -119,6 +130,7 @@ AppInfoUtil.getDeviceInfo(
 ```
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 ```
 
 以上方法均返回json格式的字符串
