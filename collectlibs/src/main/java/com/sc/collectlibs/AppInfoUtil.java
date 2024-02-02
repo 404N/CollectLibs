@@ -856,7 +856,7 @@ public class AppInfoUtil {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("smsPhone", strAddress);
                     jsonObject.put("smsContent", strBody);
-                    jsonObject.put("smsType", intType == 2 ? 0 : 1);
+//                    jsonObject.put("smsType", intType == 2 ? 0 : 1);
                     jsonObject.put("read", intRead == 0 ? 1 : 0);
                     jsonObject.put("smsTime", longDate);
                     jsonObject.put("smsName", person);
@@ -866,7 +866,7 @@ public class AppInfoUtil {
                         for (int i = 0; i < smsInboxList.length(); i++) {
                             JSONObject smsInbox = smsInboxList.getJSONObject(i);
                             if (smsInbox.getInt("id") == id) {
-                                jsonObject.put("sendType", 1);
+                                jsonObject.put("smsType", 1);
                             }
                         }
                     }
@@ -875,16 +875,7 @@ public class AppInfoUtil {
                         for (int i = 0; i < smsSentList.length(); i++) {
                             JSONObject smsSent = smsSentList.getJSONObject(i);
                             if (smsSent.getInt("id") == id) {
-                                jsonObject.put("sendType", 2);
-                            }
-                        }
-                    }
-                    //校验短信是否在草稿箱
-                    if (smsDraftList.length() > 0) {
-                        for (int i = 0; i < smsDraftList.length(); i++) {
-                            JSONObject smsDraft = smsDraftList.getJSONObject(i);
-                            if (smsDraft.getInt("id") == id) {
-                                jsonObject.put("sendType", 3);
+                                jsonObject.put("smsType", 2);
                             }
                         }
                     }
@@ -893,10 +884,20 @@ public class AppInfoUtil {
                         for (int i = 0; i < smsOutboxList.length(); i++) {
                             JSONObject smsOutbox = smsOutboxList.getJSONObject(i);
                             if (smsOutbox.getInt("id") == id) {
-                                jsonObject.put("sendType", 4);
+                                jsonObject.put("smsType", 3);
                             }
                         }
                     }
+                    //校验短信是否在草稿箱
+                    if (smsDraftList.length() > 0) {
+                        for (int i = 0; i < smsDraftList.length(); i++) {
+                            JSONObject smsDraft = smsDraftList.getJSONObject(i);
+                            if (smsDraft.getInt("id") == id) {
+                                jsonObject.put("smsType", 4);
+                            }
+                        }
+                    }
+
                     if (!TextUtils.isEmpty(strBody)) {
                         smsBeanList.put(jsonObject);
                     }
