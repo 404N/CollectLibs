@@ -15,7 +15,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.sc.collect'
                 artifactId = 'collect'
-                version = '1.2.0'
+                version = '1.2.1'
             }
         }
     }
@@ -23,11 +23,11 @@ afterEvaluate {
 
 android {
     namespace 'com.sc.collectlibs'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.collect.colleclibs'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.collect.colleclibs"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 5
         versionName "1.6"
 
@@ -47,7 +47,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation project(":collectlibs")
-//    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    //#permissionx
+    implementation 'com.guolindev.permissionx:permissionx:1.8.1'
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }
