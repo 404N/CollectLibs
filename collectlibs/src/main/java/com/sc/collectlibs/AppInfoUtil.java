@@ -292,8 +292,7 @@ public class AppInfoUtil {
                     long bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
                     deviceMap.put("lastBootTime", bootTime);
                     if (needPosition) {
-                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                             LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
                             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                                 Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
