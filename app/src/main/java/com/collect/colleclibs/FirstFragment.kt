@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.collect.colleclibs.databinding.FragmentFirstBinding
 import com.sc.collectlibs.AppInfoUtil
 import com.sc.collectlibs.AppInfoUtil.GetDeviceInfo
-import com.tbruyelle.rxpermissions3.RxPermissions
+//import com.tbruyelle.rxpermissions3.RxPermissions
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -35,18 +35,18 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonFirst.setOnClickListener {
-            RxPermissions(this)
-                .requestEach(
-                    Manifest.permission.READ_SMS,
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.READ_CALL_LOG,
-                    Manifest.permission.READ_PHONE_NUMBERS,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                ).subscribe {
-
-                }
-        }
+//        binding.buttonFirst.setOnClickListener {
+//            RxPermissions(this)
+//                .requestEach(
+//                    Manifest.permission.READ_SMS,
+//                    Manifest.permission.READ_CONTACTS,
+//                    Manifest.permission.READ_CALL_LOG,
+//                    Manifest.permission.READ_PHONE_NUMBERS,
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                ).subscribe {
+//
+//                }
+//        }
         binding.buttonAppList.setOnClickListener {
             val data = AppInfoUtil.getAppList(requireContext())
             binding.textviewFirst.text = data
