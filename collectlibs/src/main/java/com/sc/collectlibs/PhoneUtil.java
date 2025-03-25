@@ -156,15 +156,9 @@ public class PhoneUtil {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
         String imei = "unkown";
         try {
-            imei = telephonyManager.getDeviceId();
-            if (TextUtils.isEmpty(imei)) {
-                imei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            }
+            imei = telephonyManager.getImei();
         } catch (Exception e) {
-            imei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        }
-        if(imei.isEmpty()){
-            return  "-999";
+            e.printStackTrace();
         }
         return imei;
     }

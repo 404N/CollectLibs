@@ -346,6 +346,7 @@ public class AppInfoUtil {
 
     }
 
+
     public static String getDeviceInfo(Activity context, int authid, boolean needPosition) {
         /**设备信息集合*/
         HashMap<String, Object> deviceMap = new HashMap<>();
