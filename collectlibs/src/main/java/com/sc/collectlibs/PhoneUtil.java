@@ -979,4 +979,10 @@ public class PhoneUtil {
         }
         return aliveApps;
     }
+
+    public static int getCpuCoreCount() {
+        //返回cup核心数
+        return Runtime.getRuntime().availableProcessors();
+
+    }
 }

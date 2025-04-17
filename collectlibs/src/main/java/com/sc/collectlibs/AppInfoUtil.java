@@ -335,6 +335,7 @@ public class AppInfoUtil {
                     deviceMap.put("usbChargeState", getStatusUSBBattery(context));
                     deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
                     deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
+                    deviceMap.put("cpuCoreCount", PhoneUtil.getCpuCoreCount());
                     deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -414,6 +415,7 @@ public class AppInfoUtil {
             deviceMap.put("ssid", PhoneUtil.getConnectWifiSsid(context));
             deviceMap.put("timeZoneId", PhoneUtil.getGmtTimeZone());
             deviceMap.put("usbChargeState", getStatusUSBBattery(context));
+            deviceMap.put("cpuCoreCount", PhoneUtil.getCpuCoreCount());
             deviceMap.put("videoExternalCount", getVideoEXTERNALCount(context));
             deviceMap.put("videoInternalCount", getVideoINTERNALCount(context));
             deviceMap.put("wifiMac", PhoneUtil.getMacFromHardware());
