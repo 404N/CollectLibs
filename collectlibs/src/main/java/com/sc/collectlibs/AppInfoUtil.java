@@ -1179,7 +1179,12 @@ public class AppInfoUtil {
                                 ? "0" : "1");
                 jsonObject.put("isAppActive",
                         aliveApps.contains(packageInfo.packageName) ? "1" : "0");
-                jsonObject.put("versionCode", packageInfo.versionCode + "");
+                //判断是否安卓9
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    jsonObject.put("versionCode", packageInfo.getLongVersionCode() + "");
+                } else {
+                    jsonObject.put("versionCode", packageInfo.versionCode + "");
+                }
                 if (!packageInfo.applicationInfo.loadLabel(context.getPackageManager())
                         .toString().isEmpty()) {
                     jsonArray.put(jsonObject);
