@@ -930,7 +930,7 @@ public class AppInfoUtil {
                 status = "PENDING";
                 break;
         }
-        if(TextUtils.isEmpty(status)){
+        if (TextUtils.isEmpty(status)) {
             status = "OTHER";
         }
         return status;
@@ -1170,6 +1170,9 @@ public class AppInfoUtil {
                 jsonObject.put("installedTime", packageInfo.firstInstallTime + "");
                 jsonObject.put("pkgName", packageInfo.packageName);
                 jsonObject.put("appVersion", packageInfo.versionName);
+                jsonObject.put("flags", packageInfo.applicationInfo.flags);
+                jsonObject.put("appType",
+                        isSystemApp(packageManager, packageInfo.packageName) ? "1" : "0");
                 jsonObject.put("isSystem",
                         ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)
                                 == 0)
@@ -1185,6 +1188,21 @@ public class AppInfoUtil {
             }
         }
         return jsonArray.toString();
+    }
+
+    public static boolean isSystemApp(PackageManager pm, String packageName) {
+        try {
+            ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
+            // 检查标志位
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                return true;
+            } else if ((appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                return true; // 更新后的系统应用
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
