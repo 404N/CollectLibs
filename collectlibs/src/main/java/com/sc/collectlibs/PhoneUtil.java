@@ -154,7 +154,7 @@ public class PhoneUtil {
      */
     public static String getIMEI(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
-        String imei = "unkown";
+        String imei = "unknown";
         try {
             imei = telephonyManager.getImei();
         } catch (Exception e) {

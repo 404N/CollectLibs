@@ -21,7 +21,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.404N:CollectLibs:1.2.6'
+    implementation 'com.github.404N:CollectLibs:1.2.7'
 }
 ```
 
